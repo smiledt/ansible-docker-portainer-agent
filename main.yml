@@ -1,0 +1,8 @@
+---
+# Main playbook for the portainer-agent role. This deploys the portainer_agent container on the host.
+
+- name: Deploy the Portainer_Agent container.
+  hosts: docker
+  become: true
+  roles:
+    - role: docker-portainer-agent

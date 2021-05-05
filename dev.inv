@@ -1,0 +1,40 @@
+# A very basic development inventory for the infrastructure projects
+
+[windows]
+dc01
+[windows:vars]
+# varables that will apply to all windows hosts - needed for nginx role dns records
+ansible_user=smiledt
+ansible_password="{{ smiledt_pass }}"
+ansible_connection=ssh
+ansible_shell_type=cmd
+[proxy]
+proxy01
+
+[nfs_client_media]
+rr
+get
+classi
+seed
+
+[nfs_client_mirror]
+seed
+
+[docker]
+#organizr
+rr
+#get
+#seed
+#portainer
+
+[nzbget]
+get
+
+[nginx]
+proxy01
+
+[org]
+organizr
+
+[seedbox]
+seed

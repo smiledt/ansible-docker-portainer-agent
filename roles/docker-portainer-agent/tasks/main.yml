@@ -1,0 +1,32 @@
+---
+# tasks file for docker-portainer-agent
+
+- name: Create Portainer_Agent directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0777
+  loop:
+ #   - "{{ docker_socket_directory }}"
+    - "{{ docker_volume_directory }}"
+
+- name: Set Docker container parameters
+  set_fact:
+    agent_container_parameters:
+      name: "{{ container_name }}"
+      image: "{{ container_image }}"
+      state: started
+      published_ports: "{{ container_ports }}"
+      volumes:
+        - "{{ docker_socket_directory }}:/var/run/docker.sock"
+        - "{{ docker_volume_directory }}:/var/lib/docker/volumes"
+      env: "{{ agent_environment_variables }}"
+
+- name: Create Agent container
+  docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"
+  register: agent_container
+
+- name: Wait for Agent start
+  wait_for:
+    port: "{{ container_ports[0].split(':')[0] }}"
+    host: "{{ agent_container.container.NetworkSettings.IPAddress }}"

@@ -1,0 +1,16 @@
+---
+# defaults file for docker-portainer-agent
+
+container_name: portainer_agent
+container_image: portainer/agent
+container_ports:
+  - 9001:9001
+docker_socket_directory: /var/run/docker.sock
+docker_volume_directory: /var/lib/docker/volumes
+agent_environment_variables:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: America/Chicago
+
+agent_docker_additional_options:
+  restart_policy: always
