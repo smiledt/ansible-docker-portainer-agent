@@ -2,7 +2,7 @@
 # tasks file for docker-portainer-agent
 
 - name: Create Portainer_Agent directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: 0777
@@ -11,10 +11,11 @@
     - "{{ docker_volume_directory }}"
 
 - name: Set Docker container parameters
-  set_fact:
+  ansible.builtin.set_fact:
     agent_container_parameters:
       name: "{{ container_name }}"
       image: "{{ container_image }}"
+      pull: true
       state: started
       published_ports: "{{ container_ports }}"
       volumes:
@@ -23,10 +24,10 @@
       env: "{{ agent_environment_variables }}"
 
 - name: Create Agent container
-  docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"
+  community.general.docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"
   register: agent_container
 
 - name: Wait for Agent start
-  wait_for:
+  ansible.builtin.wait_for:
     port: "{{ container_ports[0].split(':')[0] }}"
     host: "{{ agent_container.container.NetworkSettings.IPAddress }}"
