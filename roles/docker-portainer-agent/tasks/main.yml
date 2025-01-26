@@ -24,7 +24,7 @@
       env: "{{ agent_environment_variables }}"
 
 - name: Create Agent container
-  community.general.docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"
+  community.docker.docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"
   register: agent_container
 
 - name: Wait for Agent start
