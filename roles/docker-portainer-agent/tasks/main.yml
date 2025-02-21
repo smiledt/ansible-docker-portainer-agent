@@ -22,8 +22,7 @@
         - "{{ docker_socket_directory }}:/var/run/docker.sock"
         - "{{ docker_volume_directory }}:/var/lib/docker/volumes"
       env: "{{ agent_environment_variables }}"
-      labels:
-        - "com.centurylinklabs.watchtower.enable={{ watchtower_update }}"
+      labels: "{{ docker_labels }}"
 
 - name: Create Agent container
   community.docker.docker_container: "{{ agent_container_parameters | combine(agent_docker_additional_options) }}"

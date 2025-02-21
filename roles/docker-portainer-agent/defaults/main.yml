@@ -15,4 +15,6 @@ agent_environment_variables:
 agent_docker_additional_options:
   restart_policy: always
 
-watchtower_update: true
+watchtower_update: "true"
+docker_labels:
+  com.centurylinklabs.watchtower.enable: "{{ watchtower_update }}"
