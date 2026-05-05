@@ -21,3 +21,4 @@ roles/.DS_Store
 
 # Ignore vars folder I will use for testing. See defaults folder for variable examples.
 vars/
+.DS_Store
